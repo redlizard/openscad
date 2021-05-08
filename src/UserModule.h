@@ -11,6 +11,9 @@ public:
 	StaticModuleNameStack(const std::string& name) {
 		stack.push_back(name);
 	}
+	StaticModuleNameStack(const StaticModuleNameStack& other) {
+		stack.push_back(stack.back());
+	}
 	~StaticModuleNameStack() {
 		stack.pop_back();
 	}

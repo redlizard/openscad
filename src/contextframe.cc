@@ -128,6 +128,16 @@ void ContextFrame::apply_variables(ContextFrame&& other)
 	apply_variables(std::move(other.config_variables));
 }
 
+void ContextFrame::apply_missing_config_variables(const ContextFrame &other)
+{
+	for (const auto& variable : other.config_variables) {
+		if (!lookup_local_variable(variable.first)) {
+			set_variable(variable.first, variable.second.clone());
+		}
+	}
+}
+
+
 bool ContextFrame::is_config_variable(const std::string &name)
 {
 	return name[0] == '$' && name != "$children";

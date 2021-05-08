@@ -29,16 +29,27 @@
 
 AbstractNode* Children::instantiate(AbstractNode* target) const
 {
+	if (!children_scope) {
+		return target;
+	}
 	return children_scope->instantiateModules(*scopeContext(), target);
 }
 
 AbstractNode* Children::instantiate(AbstractNode* target, const std::vector<size_t>& indices) const
 {
+	if (!children_scope) {
+		assert(indices.empty());
+		return target;
+	}
 	return children_scope->instantiateModules(*scopeContext(), target, indices);
 }
 
 AbstractNode* Children::instantiate(size_t index) const
 {
+	if (!children_scope) {
+		assert(false);
+		return nullptr;
+	}
 	return children_scope->instantiateModule(*scopeContext(), index);
 }
 

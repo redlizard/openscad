@@ -33,6 +33,8 @@ public:
 	void apply_config_variables(ContextFrame&& other);
 	void apply_variables(ContextFrame&& other);
 
+	void apply_missing_config_variables(const ContextFrame &other);
+
 	static bool is_config_variable(const std::string &name);
 
 	EvaluationSession* session() const { return evaluation_session; }

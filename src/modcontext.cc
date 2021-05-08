@@ -99,7 +99,9 @@ UserModuleContext::UserModuleContext(const std::shared_ptr<const Context> parent
 std::vector<const std::shared_ptr<const Context>*> UserModuleContext::list_referenced_contexts() const
 {
 	std::vector<const std::shared_ptr<const Context>*> output = Context::list_referenced_contexts();
-	output.push_back(&children.getContext());
+	if (children.getContext()) {
+		output.push_back(&children.getContext());
+	}
 	return output;
 }
 

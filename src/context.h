@@ -32,7 +32,12 @@ public:
 	
 	ContextHandle(const ContextHandle&) = delete;
 	ContextHandle& operator=(const ContextHandle&) = delete;
-	ContextHandle(ContextHandle&& other) = default;
+	
+	template<typename S>
+	ContextHandle(ContextHandle<S>&& other):
+		ContextFrameHandle(std::move(other)),
+		context(std::move(other.context))
+	{}
 	
 	// Valid only if $other is on the top of the stack.
 	ContextHandle& operator=(ContextHandle&& other)
@@ -55,6 +60,8 @@ public:
 
 private:
 	std::shared_ptr<T> context;
+	
+	template<typename S> friend class ContextHandle;
 };
 
 class Context : public ContextFrame, public std::enable_shared_from_this<Context>
